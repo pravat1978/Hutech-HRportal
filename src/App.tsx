@@ -10,6 +10,7 @@ const CompanyProfile = lazy(
 const Address = lazy(() => import("./components/company/Address"));
 const Department = lazy(() => import("./components/company/Department"));
 const Designations = lazy(() => import("./components/company/Designations"));
+const Grades = lazy(() => import("./components/company/Grades"));
 const Announcements = lazy(() => import("./components/company/Announcements"));
 const Policies = lazy(() => import("./components/company/Policies"));
 const StatutoryInfo = lazy(() => import("./components/company/StatutoryInfo"));
@@ -42,6 +43,7 @@ function App() {
           />
           <Route path="/company-profile/admins" element={<Admins />} />
           <Route path="/company-profile/my-plan" element={<MyPlan />} />
+          <Route path="/company-profile/grades" element={<Grades />} />
         </Routes>
         {import.meta.env.VITE_TEMPO === "true" && useRoutes(routes)}
       </>
