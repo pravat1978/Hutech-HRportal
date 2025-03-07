@@ -1,115 +1,174 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../layout/Layout";
-import { Plus, Edit, Trash2 } from "lucide-react";
+import { Plus, Edit, Trash2, Save, X } from "lucide-react";
 
 const Designations = () => {
-  const designations = [
+  const [designations, setDesignations] = useState([
     {
       id: 1,
-      title: "Chief Executive Officer",
-      department: "Executive",
-      level: "C-Suite",
+      title: "Android App Developer",
+      employees: 1,
     },
     {
       id: 2,
-      title: "Chief Technology Officer",
-      department: "Executive",
-      level: "C-Suite",
+      title: "Associate L1 Business Analyst",
+      employees: 1,
     },
     {
       id: 3,
-      title: "Senior Software Engineer",
-      department: "Engineering",
-      level: "Senior",
+      title: "Associate Quality Engineer",
+      employees: 2,
     },
     {
       id: 4,
-      title: "Software Engineer",
-      department: "Engineering",
-      level: "Mid-level",
+      title: "Associate Quality Engineer L1",
+      employees: 1,
     },
     {
       id: 5,
-      title: "Junior Software Engineer",
-      department: "Engineering",
-      level: "Entry-level",
+      title: "Chief Executive Officer",
+      employees: 1,
     },
     {
       id: 6,
-      title: "HR Manager",
-      department: "Human Resources",
-      level: "Manager",
+      title: "Chief Technology Officer",
+      employees: 1,
     },
     {
       id: 7,
-      title: "Marketing Specialist",
-      department: "Marketing",
-      level: "Mid-level",
+      title: "Senior Software Engineer",
+      employees: 3,
     },
     {
       id: 8,
-      title: "Financial Analyst",
-      department: "Finance",
-      level: "Mid-level",
+      title: "Software Engineer",
+      employees: 5,
     },
-  ];
+  ]);
+
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editedTitle, setEditedTitle] = useState("");
+
+  const handleEdit = (id: number, title: string) => {
+    setEditingId(id);
+    setEditedTitle(title);
+  };
+
+  const handleSave = () => {
+    setDesignations(
+      designations.map((designation) =>
+        designation.id === editingId
+          ? { ...designation, title: editedTitle }
+          : designation,
+      ),
+    );
+    setEditingId(null);
+  };
+
+  const handleCancel = () => {
+    setEditingId(null);
+  };
+
+  const handleDelete = (id: number) => {
+    setDesignations(
+      designations.filter((designation) => designation.id !== id),
+    );
+  };
 
   return (
     <Layout>
       <div className="p-6 bg-white rounded-lg shadow-sm">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold">Designations</h1>
-          <button className="flex items-center gap-2 bg-[#1e2844] text-white px-4 py-2 rounded-md hover:bg-[#2a3659] transition-colors">
-            <Plus size={16} />
-            <span>Add Designation</span>
-          </button>
+        <div className="flex items-center mb-6 bg-blue-500 text-white">
+          <div className="py-3 px-6 font-semibold">Designations</div>
+          <div className="py-3 px-6 bg-white text-black">Grades</div>
         </div>
 
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+          <div className="p-6 border-b border-gray-200">
+            <h2 className="text-xl font-bold uppercase">DESIGNATIONS</h2>
+          </div>
+
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-gray-50">
+              <thead className="bg-gray-50 border-b border-gray-200">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Title
+                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
+                    Designation
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Department
+                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
+                    Employees
+                    <div className="text-xs font-normal">(Auto calculated)</div>
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Level
-                  </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Actions
-                  </th>
+                  <th className="px-6 py-3 w-24"></th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200">
+              <tbody>
                 {designations.map((designation) => (
-                  <tr key={designation.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      {designation.title}
+                  <tr
+                    key={designation.id}
+                    className={`border-t border-gray-100 ${editingId === designation.id ? "bg-blue-50" : "hover:bg-gray-50"}`}
+                  >
+                    <td className="px-6 py-4">
+                      {editingId === designation.id ? (
+                        <input
+                          type="text"
+                          value={editedTitle}
+                          onChange={(e) => setEditedTitle(e.target.value)}
+                          className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                        />
+                      ) : (
+                        <span className="text-sm">{designation.title}</span>
+                      )}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {designation.department}
+                    <td className="px-6 py-4 text-sm">
+                      {designation.employees}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {designation.level}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-right">
-                      <div className="flex justify-end gap-2">
-                        <button className="p-1 text-blue-600 hover:text-blue-800 transition-colors">
-                          <Edit size={16} />
-                        </button>
-                        <button className="p-1 text-red-600 hover:text-red-800 transition-colors">
-                          <Trash2 size={16} />
-                        </button>
-                      </div>
+                    <td className="px-6 py-4 text-right">
+                      {editingId === designation.id ? (
+                        <div className="flex justify-end space-x-2">
+                          <button
+                            onClick={handleSave}
+                            className="p-1 text-blue-600 hover:text-blue-800 transition-colors"
+                          >
+                            <Save size={16} />
+                          </button>
+                          <button
+                            onClick={handleCancel}
+                            className="p-1 text-red-600 hover:text-red-800 transition-colors"
+                          >
+                            <X size={16} />
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="flex justify-end space-x-2">
+                          <button
+                            onClick={() =>
+                              handleEdit(designation.id, designation.title)
+                            }
+                            className="p-1 text-blue-600 hover:text-blue-800 transition-colors"
+                          >
+                            <Edit size={16} />
+                          </button>
+                          <button
+                            onClick={() => handleDelete(designation.id)}
+                            className="p-1 text-red-600 hover:text-red-800 transition-colors"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
+                      )}
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
+          </div>
+
+          <div className="p-4 border-t border-gray-200">
+            <button className="flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors">
+              <Plus size={16} />
+              <span>Add</span>
+            </button>
           </div>
         </div>
       </div>
