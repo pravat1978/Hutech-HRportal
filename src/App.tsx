@@ -14,8 +14,12 @@ const Grades = lazy(() => import("./components/company/Grades"));
 const Announcements = lazy(() => import("./components/company/Announcements"));
 const Policies = lazy(() => import("./components/company/Policies"));
 const StatutoryInfo = lazy(() => import("./components/company/StatutoryInfo"));
+const CompanyID = lazy(() => import("./components/company/CompanyID"));
 const Admins = lazy(() => import("./components/company/Admins"));
 const MyPlan = lazy(() => import("./components/company/MyPlan"));
+
+// Lazy load profile components
+const Work = lazy(() => import("./components/profile/Work"));
 
 function App() {
   return (
@@ -41,9 +45,13 @@ function App() {
             path="/company-profile/statutory-info"
             element={<StatutoryInfo />}
           />
+          <Route path="/company-profile/company-id" element={<CompanyID />} />
           <Route path="/company-profile/admins" element={<Admins />} />
           <Route path="/company-profile/my-plan" element={<MyPlan />} />
           <Route path="/company-profile/grades" element={<Grades />} />
+
+          {/* Profile Routes */}
+          <Route path="/my-profile/work" element={<Work />} />
         </Routes>
         {import.meta.env.VITE_TEMPO === "true" && useRoutes(routes)}
       </>

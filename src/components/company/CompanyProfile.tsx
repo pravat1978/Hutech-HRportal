@@ -51,6 +51,12 @@ const CompanyProfile = () => {
       link: "/company-profile/statutory-info",
     },
     {
+      icon: <FileText size={24} />,
+      title: "Company ID",
+      description: "Company identification details",
+      link: "/company-profile/company-id",
+    },
+    {
       icon: <UserCog size={24} />,
       title: "Admins",
       description: "Manage system administrators",
