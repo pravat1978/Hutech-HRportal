@@ -62,6 +62,11 @@ const SideNavigation = ({
     },
     {
       icon: <img src="/icons/profile.svg" alt="" className="w-5 h-5" />,
+      label: "Employee Onboarding",
+      href: "/employee-onboarding",
+    },
+    {
+      icon: <img src="/icons/profile.svg" alt="" className="w-5 h-5" />,
       label: "My Profile",
       href: "/my-profile",
       hasSubmenu: true,

@@ -1,7 +1,8 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useState, useEffect } from "react";
 import { useRoutes, Routes, Route } from "react-router-dom";
 import Home from "./components/home";
 import routes from "tempo-routes";
+import AppLoading from "./components/ui/app-loading";
 
 // Lazy load company profile components
 const CompanyProfile = lazy(
@@ -18,12 +19,36 @@ const CompanyID = lazy(() => import("./components/company/CompanyID"));
 const Admins = lazy(() => import("./components/company/Admins"));
 const MyPlan = lazy(() => import("./components/company/MyPlan"));
 
+// Lazy load employee components
+const EmployeeOnboarding = lazy(
+  () => import("./components/employee/EmployeeOnboarding"),
+);
+
 // Lazy load profile components
 const Work = lazy(() => import("./components/profile/Work"));
+const Team = lazy(() => import("./components/profile/Team"));
+const Education = lazy(() => import("./components/profile/Education"));
+const Family = lazy(() => import("./components/profile/Family"));
+const Documents = lazy(() => import("./components/profile/Documents"));
 
 function App() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate app initialization/loading
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return <AppLoading />;
+  }
+
   return (
-    <Suspense fallback={<p>Loading...</p>}>
+    <Suspense fallback={<AppLoading />}>
       <>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -50,8 +75,15 @@ function App() {
           <Route path="/company-profile/my-plan" element={<MyPlan />} />
           <Route path="/company-profile/grades" element={<Grades />} />
 
+          {/* Employee Routes */}
+          <Route path="/employee-onboarding" element={<EmployeeOnboarding />} />
+
           {/* Profile Routes */}
           <Route path="/my-profile/work" element={<Work />} />
+          <Route path="/my-profile/team" element={<Team />} />
+          <Route path="/my-profile/education" element={<Education />} />
+          <Route path="/my-profile/family" element={<Family />} />
+          <Route path="/my-profile/documents" element={<Documents />} />
         </Routes>
         {import.meta.env.VITE_TEMPO === "true" && useRoutes(routes)}
       </>
