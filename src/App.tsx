@@ -38,6 +38,16 @@ const AttendanceRules = lazy(
   () => import("./components/attendance/AttendanceRules"),
 );
 
+// Lazy load leave components
+const LeaveCalendar = lazy(() => import("./components/leave/LeaveCalendar"));
+const HolidayCalendar = lazy(
+  () => import("./components/leave/EnhancedHolidayCalendar"),
+);
+const HolidayCalendarRedirect = lazy(
+  () => import("./components/leave/HolidayCalendarRedirect"),
+);
+const LeaveBalance = lazy(() => import("./components/leave/LeaveBalance"));
+
 // Lazy load profile components
 const Work = lazy(() => import("./components/profile/Work"));
 const Team = lazy(() => import("./components/profile/Team"));
@@ -100,6 +110,12 @@ function App() {
             element={<AttendanceTimesheet />}
           />
           <Route path="/attendance/rules" element={<AttendanceRules />} />
+
+          {/* Leave Routes */}
+          <Route path="/leave/calendar" element={<LeaveCalendar />} />
+          <Route path="/leave/holiday-calendar" element={<HolidayCalendar />} />
+          <Route path="/holidays" element={<HolidayCalendarRedirect />} />
+          <Route path="/leave/balance" element={<LeaveBalance />} />
 
           {/* Profile Routes */}
           <Route path="/my-profile/work" element={<Work />} />

@@ -91,7 +91,7 @@ const SideNavigation = ({
       hasSubmenu: true,
       submenuItems: [
         { label: "Logs", href: "/attendance/logs" },
-        { label: "Rules", href: "/attendance/rules" },
+        { label: "My Attendance", href: "/attendance/rules" },
         { label: "Approvals", href: "/attendance/approvals" },
       ],
     },
@@ -132,7 +132,7 @@ const SideNavigation = ({
     {
       icon: <img src="/icons/calendar.svg" alt="" className="w-5 h-5" />,
       label: "Holiday Calendar",
-      href: "/holidays",
+      href: "/leave/holiday-calendar",
     },
     {
       icon: <img src="/icons/konnect.svg" alt="" className="w-5 h-5" />,
