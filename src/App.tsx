@@ -24,6 +24,20 @@ const EmployeeOnboarding = lazy(
   () => import("./components/employee/EmployeeOnboarding"),
 );
 
+// Lazy load directory component
+const Directory = lazy(() => import("./components/directory/Directory"));
+
+// Lazy load attendance components
+const AttendanceLogs = lazy(
+  () => import("./components/attendance/AttendanceLogs"),
+);
+const AttendanceTimesheet = lazy(
+  () => import("./components/attendance/AttendanceTimesheet"),
+);
+const AttendanceRules = lazy(
+  () => import("./components/attendance/AttendanceRules"),
+);
+
 // Lazy load profile components
 const Work = lazy(() => import("./components/profile/Work"));
 const Team = lazy(() => import("./components/profile/Team"));
@@ -77,6 +91,15 @@ function App() {
 
           {/* Employee Routes */}
           <Route path="/employee-onboarding" element={<EmployeeOnboarding />} />
+          <Route path="/directory" element={<Directory />} />
+
+          {/* Attendance Routes */}
+          <Route path="/attendance/logs" element={<AttendanceLogs />} />
+          <Route
+            path="/attendance/timesheet"
+            element={<AttendanceTimesheet />}
+          />
+          <Route path="/attendance/rules" element={<AttendanceRules />} />
 
           {/* Profile Routes */}
           <Route path="/my-profile/work" element={<Work />} />
